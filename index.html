@@ -165,9 +165,9 @@
             </div>
 
             <label class="input-label">LICENSE KEY</label>
-            <!-- अटकाने वाला पुराना लॉजिक हटा दिया गया है -->
-            <input type="text" id="licenseKey" placeholder="XREG-XXXX-XXXX-XXXX" class="key-input" autocomplete="off">
-            <p id="msg" class="msg-text">■ ENTER YOUR FULL KEY</p>
+            <!-- इस इनपुट बॉक्स में रैंडम की अपने आप लोड होगी -->
+            <input type="text" id="licenseKey" class="key-input" autocomplete="off" readonly>
+            <p id="msg" class="msg-text">■ CLICK AUTHENTICATE TO ACCESS ENGINE</p>
             <button onclick="processAuth()" class="btn-primary">AUTHENTICATE</button>
         </div>
 
@@ -179,7 +179,7 @@
             </div>
             
             <div class="info-row"><span class="info-label">Status</span><span class="info-value text-green">● Active</span></div>
-            <div class="info-row"><span class="info-label">HWID</span><span class="info-value">ed268ed01d67b7e8</span></div>
+            <div class="info-row"><span class="info-label">HWID</span><span class="info-value" id="finalHwid">ed268ed01d67b7e8</span></div>
             <div class="info-row"><span class="info-label">Device</span><span class="info-value">CPH2269</span></div>
             <div class="info-row"><span class="info-label">Expires In</span><span class="info-value text-green">29d 23h 59m</span></div>
 
@@ -193,19 +193,28 @@
     </div>
 
     <script>
-        function processAuth() {
-            const input = document.getElementById('licenseKey');
-            const msg = document.getElementById('msg');
-            const key = input.value.trim();
-            
-            if (key === "") {
-                msg.innerText = "✖ PLEASE ENTER A KEY";
-                msg.style.color = "#ef4444";
-                return;
+        // ऑटोमैटिक नई रैंडम की (Key) बनाने का जादुई लॉजिक
+        function generateRandomKey() {
+            const chars = 'ABCDEF0123456789';
+            function gen(len) {
+                let res = '';
+                for (let i = 0; i < len; i++) {
+                    res += chars.charAt(Math.floor(Math.random() * chars.length));
+                }
+                return res;
             }
+            return `XREG-${gen(4)}-${gen(4)}-${gen(4)}`;
+        }
 
-            msg.innerText = "⏳ VERIFYING LICENSE...";
-            msg.style.color = "#3b82f6";
+        // पेज लोड होते ही बॉक्स में नई की डालना
+        window.onload = function() {
+            document.getElementById('licenseKey').value = generateRandomKey();
+        };
+
+        function processAuth() {
+            const documentMsg = document.getElementById('msg');
+            documentMsg.innerText = "⏳ VERIFYING LICENSE...";
+            documentMsg.style.color = "#3b82f6";
 
             setTimeout(() => {
                 document.getElementById('loginScreen').style.display = 'none';
@@ -216,6 +225,7 @@
         }
 
         function goToHapp() {
+            // यहाँ अपना असली टेलीग्राम चैनल लिंक डालें
             window.location.href = "https://t.me"; 
         }
     </script>
