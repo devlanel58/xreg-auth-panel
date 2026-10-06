@@ -19,6 +19,7 @@
             user-select: none;
         }
         
+        /* इन-गेम तैरने वाला गोल आइकन */
         .floating-widget {
             position: fixed;
             bottom: 30px;
@@ -61,7 +62,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: flex-start;
+            justify-content: center;
         }
 
         .logo-box {
@@ -85,6 +86,52 @@
             font-weight: 600;
         }
 
+        /* लॉगिन स्क्रीन का स्टाइल */
+        .form-area { width: 100%; }
+        .input-label {
+            font-size: 10px;
+            letter-spacing: 2px;
+            color: #475569;
+            font-weight: 700;
+            margin-bottom: 6px;
+            display: block;
+        }
+        .key-input {
+            width: 100%;
+            background-color: #0b0d16;
+            border: 1px solid #1e293b;
+            border-radius: 6px;
+            padding: 15px;
+            text-align: center;
+            color: #ffffff;
+            font-size: 13px;
+            font-family: monospace;
+            letter-spacing: 2px;
+            outline: none;
+        }
+        .msg-text {
+            text-align: center;
+            font-size: 10px;
+            letter-spacing: 1px;
+            color: #3b82f6;
+            margin: 15px 0;
+        }
+        .btn-auth {
+            width: 100%;
+            background: #2563eb;
+            border: 1px solid #2563eb;
+            color: #ffffff;
+            padding: 15px;
+            border-radius: 6px;
+            font-weight: 800;
+            font-size: 12px;
+            letter-spacing: 3px;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        /* अंदर का डैशबोर्ड स्टाइल */
+        .dashboard-area { width: 100%; display: none; }
         .menu-tabs {
             display: flex;
             width: 100%;
@@ -161,55 +208,13 @@
             margin-top: 20px;
         }
 
-        /* 📲 Happ Proxy Utility डाउनलोड लिस्ट स्टाइल (हूबहू आपके स्क्रीनशॉट जैसा) */
-        .download-container {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-top: 10px;
-        }
-        .download-item {
-            background-color: #0b0d16;
-            border: 1px solid #1e293b;
-            border-radius: 8px;
-            padding: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .download-info {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
-        .download-info h4 {
-            color: #ffffff;
-            font-size: 13px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-        }
-        .download-info p {
-            color: #475569;
-            font-size: 10px;
-            font-family: monospace;
-        }
-        .get-btn {
-            background-color: transparent;
-            border: 1px solid #2563eb;
-            color: #3b82f6;
-            font-size: 11px;
-            font-weight: 800;
-            padding: 6px 16px;
-            border-radius: 4px;
-            text-decoration: none;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: all 0.2s;
-        }
-        .get-btn:hover {
-            background-color: rgba(37, 99, 235, 0.1);
-        }
+        /* System टैब का डाउनलोड स्टाइल */
+        .download-container { width: 100%; display: flex; flex-direction: column; gap: 12px; margin-top: 10px; }
+        .download-item { background-color: #0b0d16; border: 1px solid #1e293b; border-radius: 8px; padding: 14px; display: flex; align-items: center; justify-content: space-between; }
+        .download-info { display: flex; flex-direction: column; gap: 2px; }
+        .download-info h4 { color: #ffffff; font-size: 13px; font-weight: 700; }
+        .download-info p { color: #475569; font-size: 10px; font-family: monospace; }
+        .get-btn { background-color: transparent; border: 1px solid #2563eb; color: #3b82f6; font-size: 11px; font-weight: 800; padding: 6px 16px; border-radius: 4px; text-decoration: none; text-transform: uppercase; }
 
         .footer {
             width: 100%;
@@ -229,7 +234,7 @@
 
     <div class="top-bar">
         <div class="status-dot"><span class="dot"></span> ACCESS REQUIRED</div>
-        <div style="color: #22c55e; font-weight: bold;">ACTIVE</div>
+        <div id="topStatus" style="color: #2563eb; font-weight: bold;">LOCKED</div>
     </div>
 
     <div class="container">
@@ -239,33 +244,25 @@
             <div class="logo-sub">Authentication Engine</div>
         </div>
 
-        <div class="menu-tabs">
-            <button id="btn-control" class="tab-btn active" onclick="switchTab('control')">Control</button>
-            <button id="btn-modules" class="tab-btn" onclick="switchTab('modules')">Modules</button>
-            <button id="btn-system" class="tab-btn" onclick="switchTab('system')">System</button>
+        <!-- 🔷 स्क्रीन 1: लॉगिन फॉर्म (सबसे पहले यही दिखेगा) -->
+        <div id="loginScreen" class="form-area">
+            <label class="input-label">LICENSE KEY</label>
+            <input type="text" id="licenseKey" value="XREG-90B3-A606-76FC" class="key-input" readonly>
+            <p id="msg" class="msg-text">■ CLICK AUTHENTICATE TO ACCESS ENGINE</p>
+            <button onclick="processAuth()" class="btn-auth">AUTHENTICATE</button>
         </div>
 
-        <!-- टैब 1: CONTROL -->
-        <div id="control" class="menu-section active">
-            <div class="info-row"><span class="info-label">Status</span><span class="info-value text-green">● Active</span></div>
-            <div class="info-row"><span class="info-label">HWID</span><span class="info-value">ed268ed01d67b7e8</span></div>
-            <div class="info-row"><span class="info-label">Server Region</span><span class="info-value" id="locVal">Japan 🇯🇵</span></div>
-            <div class="info-row"><span class="info-label">Bypass IP</span><span class="info-value" id="ipVal">210.140.10.5</span></div>
-            <div class="info-row"><span class="info-label">Expires In</span><span class="info-value text-green">29d 23h 59m</span></div>
-            <button class="btn-primary" onclick="openPlayStore()">ADD TO HAPP</button>
-        </div>
+        <!-- 🔷 स्क्रीन 2: अंदर का पूरा मेनू (बटन दबाने पर खुलेगा) -->
+        <div id="dashboardArea" class="dashboard-area">
+            <div class="menu-tabs">
+                <button id="btn-control" class="tab-btn active" onclick="switchTab('control')">Control</button>
+                <button id="btn-modules" class="tab-btn" onclick="switchTab('modules')">Modules</button>
+                <button id="btn-system" class="tab-btn" onclick="switchTab('system')">System</button>
+            </div>
 
-        <!-- टैब 2: MODULES -->
-        <div id="modules" class="menu-section">
-            <div class="sub-heading">🎯 TARGET HOLD OPTIONS</div>
-            <div class="feature-box"><span class="feature-title">When Firing</span><label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
-            <div class="feature-box"><span class="feature-title">When Scoping</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
-            
-            <div class="sub-heading">⚡ AIMBOT CONFIG</div>
-            <div class="feature-box"><span class="feature-title">Auto Aim Lock</span><label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
-            <div class="feature-box"><span class="feature-title">ESP Line View</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
-        </div>
-
-        <!-- 📂 टैब 3: SYSTEM (हूबहू Happ Proxy Utility वाला फोटो सेटअप) -->
-        <div id="system" class="menu-section">
-            
+            <!-- टैब 1: CONTROL -->
+            <div id="control" class="menu-section active">
+                <div class="info-row"><span class="info-label">Status</span><span class="info-value text-green">● Active</span></div>
+                <div class="info-row"><span class="info-label">HWID</span><span class="info-value">ed268ed01d67b7e8</span></div>
+                <div class="info-row"><span class="info-label">Server Region</span><span class="info-value" id="locVal">Japan 🇯🇵</span></div>
+                
