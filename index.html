@@ -18,6 +18,8 @@
             padding: 15px;
             user-select: none;
         }
+        
+        /* फ्लोटिंग आइकन (0) */
         .floating-widget {
             position: fixed;
             bottom: 30px;
@@ -38,6 +40,7 @@
             box-shadow: 0 0 15px rgba(37, 99, 235, 0.6);
             z-index: 9999;
         }
+
         .top-bar {
             width: 100%;
             max-width: 350px;
@@ -51,6 +54,7 @@
         }
         .status-dot { display: flex; align-items: center; gap: 6px; }
         .dot { width: 6px; height: 6px; background-color: #2563eb; border-radius: 50%; }
+        
         .container {
             width: 100%;
             max-width: 350px;
@@ -58,21 +62,91 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: flex-start;
+            justify-content: center;
         }
-        .logo-box { text-align: center; margin-bottom: 25px; }
-        .logo-text { font-size: 42px; font-weight: 900; letter-spacing: 4px; color: #2563eb; font-style: italic; text-shadow: 0 0 15px rgba(37, 99, 235, 0.6); }
-        .logo-sub { font-size: 9px; letter-spacing: 4px; text-transform: uppercase; color: #3b82f6; margin-top: 6px; font-weight: 600; }
-        .menu-tabs { display: flex; width: 100%; background-color: #0b0d16; border: 1px solid #1e293b; border-radius: 8px; overflow: hidden; margin-bottom: 20px; }
-        .tab-btn { flex: 1; padding: 12px; background: none; border: none; color: #475569; font-size: 11px; font-weight: 800; letter-spacing: 1px; cursor: pointer; text-transform: uppercase; text-align: center; }
-        .tab-btn.active { color: #ffffff; background-color: #2563eb; box-shadow: inset 0 0 10px rgba(0,0,0,0.5); }
+
+        .logo-box {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        .logo-text {
+            font-size: 42px;
+            font-weight: 900;
+            letter-spacing: 4px;
+            color: #2563eb;
+            font-style: italic;
+            text-shadow: 0 0 15px rgba(37, 99, 235, 0.6);
+        }
+        .logo-sub {
+            font-size: 9px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #3b82f6;
+            margin-top: 6px;
+            font-weight: 600;
+        }
+
+        /* स्क्रीन 1: लॉगिन स्क्रीन */
+        .form-area { width: 100%; display: block; }
+        .input-label { font-size: 10px; letter-spacing: 2px; color: #475569; font-weight: 700; margin-bottom: 6px; display: block; }
+        .key-input { width: 100%; background-color: #0b0d16; border: 1px solid #1e293b; border-radius: 6px; padding: 15px; text-align: center; color: #ffffff; font-size: 13px; font-family: monospace; letter-spacing: 2px; outline: none; }
+        .msg-text { text-align: center; font-size: 10px; letter-spacing: 1px; color: #3b82f6; margin: 15px 0; }
+        .btn-primary-auth { width: 100%; background: #2563eb; border: 1px solid #2563eb; color: #ffffff; padding: 15px; border-radius: 6px; font-weight: 800; font-size: 12px; letter-spacing: 3px; text-transform: uppercase; text-align: center; }
+
+        /* स्क्रीन 2: डैशबोर्ड स्क्रीन */
+        .dashboard-area { width: 100%; display: none; }
+        .menu-tabs {
+            display: flex;
+            width: 100%;
+            background-color: #0b0d16;
+            border: 1px solid #1e293b;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        .tab-btn {
+            flex: 1;
+            padding: 12px;
+            background: none;
+            border: none;
+            color: #475569;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            cursor: pointer;
+            text-transform: uppercase;
+            text-align: center;
+        }
+        .tab-btn.active {
+            color: #ffffff;
+            background-color: #2563eb;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+        }
+
         .menu-section { width: 100%; display: none; }
         .menu-section.active { display: block; }
-        .info-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #1e293b; font-size: 12px; }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #1e293b;
+            font-size: 12px;
+        }
         .info-label { color: #475569; font-weight: 600; text-transform: uppercase; }
         .info-value { color: #ffffff; font-family: monospace; }
         .text-green { color: #22c55e; font-weight: bold; }
-        .feature-box { display: flex; justify-content: space-between; align-items: center; padding: 12px 10px; background-color: #0b0d16; border: 1px solid #1e293b; border-radius: 6px; margin-bottom: 8px; }
+
+        .feature-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 10px;
+            background-color: #0b0d16;
+            border: 1px solid #1e293b;
+            border-radius: 6px;
+            margin-bottom: 8px;
+        }
         .feature-title { font-size: 11px; font-weight: 700; color: #ffffff; text-transform: uppercase; }
         .switch { position: relative; display: inline-block; width: 36px; height: 20px; }
         .switch input { opacity: 0; width: 0; height: 0; }
@@ -81,14 +155,39 @@
         input:checked + .slider { background-color: #2563eb; }
         input:checked + .slider:before { transform: translateX(16px); }
         .sub-heading { font-size: 10px; color: #475569; font-weight: 800; letter-spacing: 1px; margin: 15px 0 5px 2px; text-transform: uppercase; }
-        .btn-primary { width: 100%; background: transparent; border: 1px solid #2563eb; color: #3b82f6; padding: 14px; border-radius: 6px; font-weight: 800; font-size: 12px; letter-spacing: 2px; cursor: pointer; text-transform: uppercase; margin-top: 20px; }
+
+        .btn-action-panel {
+            width: 100%;
+            background: transparent;
+            border: 1px solid #2563eb;
+            color: #3b82f6;
+            padding: 14px;
+            border-radius: 6px;
+            font-weight: 800;
+            font-size: 12px;
+            letter-spacing: 2px;
+            cursor: pointer;
+            text-transform: uppercase;
+            margin-top: 20px;
+        }
+
         .download-container { width: 100%; display: flex; flex-direction: column; gap: 12px; margin-top: 10px; }
         .download-item { background-color: #0b0d16; border: 1px solid #1e293b; border-radius: 8px; padding: 14px; display: flex; align-items: center; justify-content: space-between; }
         .download-info { display: flex; flex-direction: column; gap: 2px; }
         .download-info h4 { color: #ffffff; font-size: 13px; font-weight: 700; }
         .download-info p { color: #475569; font-size: 10px; font-family: monospace; }
         .get-btn { background-color: transparent; border: 1px solid #2563eb; color: #3b82f6; font-size: 11px; font-weight: 800; padding: 6px 16px; border-radius: 4px; text-decoration: none; text-transform: uppercase; }
-        .footer { width: 100%; max-width: 350px; text-align: center; font-size: 10px; color: #334155; border-top: 1px solid rgba(30, 41, 59, 0.3); padding-top: 12px; margin-top: 20px; }
+
+        .footer {
+            width: 100%;
+            max-width: 350px;
+            text-align: center;
+            font-size: 10px;
+            color: #334155;
+            border-top: 1px solid rgba(30, 41, 59, 0.3);
+            padding-top: 12px;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -97,66 +196,43 @@
 
     <div class="top-bar">
         <div class="status-dot"><span class="dot"></span> ACCESS REQUIRED</div>
-        <div style="color: #22c55e; font-weight: bold;">ACTIVE</div>
+        <div id="topStatus" style="color: #2563eb; font-weight: bold;">LOCKED</div>
     </div>
 
     <div class="container">
+        
         <div class="logo-box">
             <h1 class="logo-text">XREG</h1>
             <div class="logo-sub">Authentication Engine</div>
         </div>
 
-        <div class="menu-tabs">
-            <button id="btn-control" class="tab-btn active" onclick="switchTab('control')">Control</button>
-            <button id="btn-modules" class="tab-btn" onclick="switchTab('modules')">Modules</button>
-            <button id="btn-system" class="tab-btn" onclick="switchTab('system')">System</button>
+        <!-- 🔷 स्क्रीन 1: लॉगिन फॉर्म -->
+        <div id="loginScreen" class="form-area">
+            <label class="input-label">LICENSE KEY</label>
+            <input type="text" value="XREG-90B3-A606-76FC" class="key-input" readonly>
+            <p id="msg" class="msg-text">⏳ AUTOMATIC AUTHENTICATING...</p>
+            <div class="btn-primary-auth">CONNECTING Engine...</div>
         </div>
 
-        <!-- CONTROL टैब -->
-        <div id="control" class="menu-section active">
-            <div class="info-row"><span class="info-label">Status</span><span class="info-value text-green">● Active</span></div>
-            <div class="info-row"><span class="info-label">HWID</span><span class="info-value">ed268ed01d67b7e8</span></div>
-            <div class="info-row"><span class="info-label">Server Region</span><span class="info-value">Japan 🇯🇵</span></div>
-            <div class="info-row"><span class="info-label">Bypass IP</span><span class="info-value">210.140.10.5</span></div>
-            <div class="info-row"><span class="info-label">Expires In</span><span class="info-value text-green">29d 23h 59m</span></div>
-            <button class="btn-primary" onclick="openPlayStore()">ADD TO HAPP</button>
-        </div>
-
-        <!-- MODULES टैब -->
-        <div id="modules" class="menu-section">
-            <div class="sub-heading">🎯 TARGET HOLD OPTIONS</div>
-            <div class="feature-box"><span class="feature-title">When Firing</span><label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
-            <div class="feature-box"><span class="feature-title">When Scoping</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
-            <div class="sub-heading">⚡ AIMBOT CONFIG</div>
-            <div class="feature-box"><span class="feature-title">Auto Aim Lock</span><label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
-            <div class="feature-box"><span class="feature-title">ESP Line View</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
-        </div>
-
-        <!-- SYSTEM टैब -->
-        <div id="system" class="menu-section">
-            <div class="download-container">
-                <div class="download-item">
-                    <div class="download-info"><h4>Happ for iOS</h4><p>://apple.com</p></div>
-                    <a href="https://://apple.com" target="_blank" class="get-btn">GET</a>
-                </div>
-                <div class="download-item">
-                    <div class="download-info"><h4>Happ for Android</h4><p>://google.com</p></div>
-                    <a href="https://://google.com/store/apps/details?id=com.happproxy" target="_blank" class="get-btn">GET</a>
-                </div>
+        <!-- 🔷 स्क्रीन 2: अंदर का मुख्य इन-गेम मेनू -->
+        <div id="dashboardArea" class="dashboard-area">
+            <div class="menu-tabs">
+                <button id="btn-control" class="tab-btn active" onclick="switchTab('control')">Control</button>
+                <button id="btn-modules" class="tab-btn" onclick="switchTab('modules')">Modules</button>
+                <button id="btn-system" class="tab-btn" onclick="switchTab('system')">System</button>
             </div>
-        </div>
-    </div>
 
-    <div class="footer">A valid license unlocks the engine. Keys are bound to one device.</div>
+            <!-- टैब 1: CONTROL -->
+            <div id="control" class="menu-section active">
+                <div class="info-row"><span class="info-label">Status</span><span class="info-value text-green">● Active</span></div>
+                <div class="info-row"><span class="info-label">HWID</span><span class="info-value">ed268ed01d67b7e8</span></div>
+                <div class="info-row"><span class="info-label">Server Region</span><span class="info-value" id="locVal">Japan 🇯🇵</span></div>
+                <div class="info-row"><span class="info-label">Bypass IP</span><span class="info-value" id="ipVal">210.140.10.5</span></div>
+                <div class="info-row"><span class="info-label">Expires In</span><span class="info-value text-green">29d 23h 59m</span></div>
+                <button class="btn-primary-auth" style="margin-top: 20px; background: transparent; border: 1px solid #2563eb; color: #3b82f6;" onclick="openPlayStore()">ADD TO HAPP</button>
+            </div>
 
-    <script>
-        function switchTab(t) {
-            document.querySelectorAll('.menu-section').forEach(e => e.classList.remove('active'));
-            document.querySelectorAll('.tab-btn').forEach(e => e.classList.remove('active'));
-            document.getElementById(t).classList.add('active');
-            document.getElementById('btn-' + t).classList.add('active');
-        }
-        function openPlayStore() { window.location.href = "https://://google.com/store/apps/details?id=com.happproxy"; }
-    </script>
-</body>
-</html>
+            <!-- टैब 2: MODULES -->
+            <div id="modules" class="menu-section">
+                <div class="sub-heading">🎯 TARGET HOLD OPTIONS</div>
+                
