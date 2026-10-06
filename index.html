@@ -5,15 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>XREG Client Authentication</title>
     <style>
-        /* पूरे पेज का बैकग्राउंड और फॉन्ट */
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
         body {
-            background-color: #050508;
-            color: #9ca3af;
+            background-color: #050508 !important;
+            color: #9ca3af !important;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             min-height: 100vh;
             display: flex;
@@ -23,8 +22,6 @@
             padding: 24px;
             user-select: none;
         }
-
-        /* टॉप स्टेटस बार */
         .status-bar {
             width: 100%;
             max-width: 400px;
@@ -44,16 +41,14 @@
         .dot {
             width: 8px;
             height: 8px;
-            background-color: #3b82f6;
+            background-color: #2563eb;
             border-radius: 50%;
         }
         .status-right {
-            color: #3b82f6;
+            color: #2563eb;
             font-weight: bold;
             letter-spacing: 3px;
         }
-
-        /* मेन कंटेनर */
         .main-container {
             width: 100%;
             max-width: 400px;
@@ -64,8 +59,6 @@
             flex-grow: 1;
             margin: 32px 0;
         }
-
-        /* XREG लोगो */
         .logo-box {
             text-align: center;
             margin-bottom: 48px;
@@ -74,20 +67,18 @@
             font-size: 48px;
             font-weight: 900;
             letter-spacing: 4px;
-            color: #3b82f6;
+            color: #2563eb;
             font-style: italic;
-            text-shadow: 0 0 15px rgba(59, 130, 246, 0.6);
+            text-shadow: 0 0 15px rgba(37, 99, 235, 0.6);
         }
         .logo-sub {
             font-size: 10px;
             letter-spacing: 4px;
             text-transform: uppercase;
-            color: #60a5fa;
+            color: #3b82f6;
             margin-top: 8px;
             font-weight: 600;
         }
-
-        /* फॉर्म और इनपुट */
         .form-box {
             width: 100%;
         }
@@ -102,58 +93,39 @@
         }
         .input-field {
             width: 100%;
-            background-color: #0d0e12;
-            border: 1px solid #1f2937;
+            background-color: #0d0e12 !important;
+            border: 1px solid #1f2937 !important;
             border-radius: 8px;
             padding: 16px;
             text-align: center;
             letter-spacing: 3px;
-            color: #ffffff;
+            color: #ffffff !important;
             font-size: 14px;
             font-family: monospace;
             text-transform: uppercase;
             outline: none;
-            transition: all 0.3s;
         }
-        .input-field::placeholder {
-            color: #374151;
-        }
-        .input-field:focus {
-            border-color: #3b82f6;
-            box-shadow: 0 0 10px rgba(59, 130, 246, 0.2);
-        }
-
-        /* स्टेटस संदेश */
         .status-msg {
             text-align: center;
             font-size: 11px;
             letter-spacing: 2px;
-            color: #60a5fa;
+            color: #3b82f6;
             margin-top: 12px;
             margin-bottom: 20px;
         }
-
-        /* बटन */
         .auth-btn {
             width: 100%;
-            background-color: transparent;
-            border: 1px solid #2563eb;
-            color: #60a5fa;
+            background-color: transparent !important;
+            border: 1px solid #2563eb !important;
+            color: #3b82f6 !important;
             font-weight: bold;
             letter-spacing: 3px;
             padding: 16px;
             border-radius: 8px;
             cursor: pointer;
-            transition: all 0.3s;
             font-size: 14px;
+            text-transform: uppercase;
         }
-        .auth-btn:hover {
-            background-color: rgba(59, 130, 246, 0.1);
-            color: #93c5fd;
-            box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
-        }
-
-        /* फुटर */
         .footer-text {
             width: 100%;
             max-width: 400px;
@@ -170,16 +142,11 @@
 </head>
 <body>
 
-    <!-- टॉप स्टेटस बार -->
     <div class="status-bar">
-        <div class="status-left">
-            <span class="dot"></span>
-            ACCESS REQUIRED
-        </div>
+        <div class="status-left"><span class="dot"></span>ACCESS REQUIRED</div>
         <div class="status-right">LOCKED</div>
     </div>
 
-    <!-- मेन एरिया -->
     <div class="main-container">
         <div class="logo-box">
             <h1 class="logo-text">XREG</h1>
@@ -188,55 +155,38 @@
 
         <div class="form-box">
             <label class="label-text">LICENSE KEY</label>
-            <input 
-                type="text" 
-                id="licenseKey"
-                placeholder="XREG-XXXX-XXXX-XXXX" 
-                maxlength="19"
-                class="input-field"
-                autocomplete="off"
-            >
+            <input type="text" id="licenseKey" placeholder="XREG-XXXX-XXXX-XXXX" maxlength="19" class="input-field" autocomplete="off">
             <p id="statusMsg" class="status-msg">■ ENTER YOUR FULL KEY</p>
             <button onclick="checkLicense()" class="auth-btn">AUTHENTICATE</button>
         </div>
     </div>
 
-    <!-- बॉटम फुटर -->
     <div class="footer-text">
         A valid license unlocks the engine. Keys are bound to one device.
     </div>
 
-    <!-- लॉजिक स्क्रिप्ट -->
     <script>
         const input = document.getElementById('licenseKey');
         const status = document.getElementById('statusMsg');
 
-        // डैश ऑटो-फॉर्मेटिंग
         input.addEventListener('input', (e) => {
-            let val = e.target.value.replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
-            if (val.length > 0 && !val.startsWith('XREG')) {
-                val = 'XREG' + val;
-            }
+            let val = e.target.value.replace(/[^a-zA-Z0-0]/g, '').toUpperCase();
+            if (val.length > 0 && !val.startsWith('XREG')) { val = 'XREG' + val; }
             let formatted = '';
             for (let i = 0; i < val.length; i++) {
-                if (i === 4 || i === 8 || i === 12) {
-                    formatted += '-';
-                }
+                if (i === 4 || i === 8 || i === 12) { formatted += '-'; }
                 formatted += val[i];
             }
             e.target.value = formatted.substring(0, 19);
         });
 
-        // बटन क्लिक चेक
         function checkLicense() {
             const key = input.value;
-            
             if (key.length < 19) {
                 status.innerText = "✖ INVALID KEY LENGTH";
                 status.style.color = "#ef4444";
                 return;
             }
-
             if (key === "XREG-1111-2222-3333") {
                 status.innerText = "✔ ACCESS GRANTED! UNLOCKING...";
                 status.style.color = "#22c55e";
