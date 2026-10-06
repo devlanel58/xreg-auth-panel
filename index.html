@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XREG Client Authentication</title>
+    <title>XREG Client Menu</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
@@ -15,11 +15,11 @@
             flex-direction: column;
             align-items: center;
             justify-content: space-between;
-            padding: 20px;
+            padding: 15px;
             user-select: none;
         }
         
-        /* तैरने वाला गोल आइकन (0) */
+        /* तैरने वाला गोल आइकन */
         .floating-widget {
             position: fixed;
             bottom: 30px;
@@ -36,7 +36,6 @@
             font-weight: 900;
             font-size: 14px;
             font-family: monospace;
-            cursor: pointer;
             box-shadow: 0 0 15px rgba(37, 99, 235, 0.6);
             z-index: 9999;
         }
@@ -48,8 +47,9 @@
             justify-content: space-between;
             font-size: 10px;
             letter-spacing: 2px;
-            opacity: 0.5;
+            opacity: 0.6;
             margin-top: 5px;
+            margin-bottom: 15px;
         }
         .status-dot { display: flex; align-items: center; gap: 6px; }
         .dot { width: 6px; height: 6px; background-color: #2563eb; border-radius: 50%; }
@@ -62,16 +62,14 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            margin: 20px 0;
         }
 
-        /* XREG लोगो स्टाइल */
         .logo-box {
             text-align: center;
-            margin-bottom: 35px;
+            margin-bottom: 25px;
         }
         .logo-text {
-            font-size: 48px;
+            font-size: 42px;
             font-weight: 900;
             letter-spacing: 4px;
             color: #2563eb;
@@ -79,52 +77,27 @@
             text-shadow: 0 0 15px rgba(37, 99, 235, 0.6);
         }
         .logo-sub {
-            font-size: 10px;
+            font-size: 9px;
             letter-spacing: 4px;
             text-transform: uppercase;
             color: #3b82f6;
-            margin-top: 8px;
+            margin-top: 6px;
             font-weight: 600;
         }
 
-        /* लॉगिन फॉर्म एरिया */
-        .form-area { width: 100%; }
-        .input-label {
-            font-size: 10px;
-            letter-spacing: 2px;
-            color: #475569;
-            font-weight: 700;
-            margin-bottom: 6px;
-            display: block;
-        }
-        .key-input {
-            width: 100%;
-            background-color: #0b0d16;
-            border: 1px solid #1e293b;
-            border-radius: 6px;
-            padding: 15px;
-            text-align: center;
-            color: #ffffff;
-            font-size: 13px;
-            font-family: monospace;
-            letter-spacing: 2px;
-            outline: none;
-        }
-        .msg-text {
-            text-align: center;
-            font-size: 10px;
-            letter-spacing: 1px;
-            color: #3b82f6;
-            margin: 15px 0;
-        }
+        /* 🔷 स्क्रीन 1: लॉगिन फॉर्म (डिफ़ॉल्ट रूप से चालू) */
+        #loginScreen { width: 100%; display: block; }
+        .input-label { font-size: 10px; letter-spacing: 2px; color: #475569; font-weight: 700; margin-bottom: 6px; display: block; }
+        .key-input { width: 100%; background-color: #0b0d16; border: 1px solid #1e293b; border-radius: 6px; padding: 15px; text-align: center; color: #ffffff; font-size: 13px; font-family: monospace; letter-spacing: 2px; outline: none; }
+        .msg-text { text-align: center; font-size: 10px; letter-spacing: 1px; color: #3b82f6; margin: 15px 0; }
         
-        /* 100% असली वर्किंग एंकर बटन */
-        .btn-primary {
+        /* बटन को CSS हैश-लिंक (#show-menu) से जोड़ा गया है */
+        .btn-auth {
             display: block;
             width: 100%;
-            background: #2563eb !important;
+            background: #2563eb;
             border: 1px solid #2563eb;
-            color: #ffffff !important;
+            color: #ffffff;
             padding: 15px;
             border-radius: 6px;
             font-weight: 800;
@@ -136,6 +109,71 @@
             text-decoration: none;
         }
 
+        /* 🔷 स्क्रीन 2: अंदर का डैशबोर्ड (शुरू में छुपा रहेगा) */
+        #dashboardArea { width: 100%; display: none; }
+        
+        /* ⚡ जादुई CSS ट्रिक: जैसे ही बटन दबेगा, URL में #show-menu आते ही स्क्रीन बदल जाएगी */
+        body:has(:target) #loginScreen { display: none !important; }
+        body:has(:target) #dashboardArea { display: block !important; }
+        body:has(:target) #topStatus { color: #22c55e !important; }
+        body:has(:target) #topStatusText { content: "ACTIVE"; }
+
+        .menu-tabs {
+            display: flex;
+            width: 100%;
+            background-color: #0b0d16;
+            border: 1px solid #1e293b;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        .tab-btn {
+            flex: 1;
+            padding: 12px;
+            background: none;
+            border: none;
+            color: #475569;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            cursor: pointer;
+            text-transform: uppercase;
+            text-align: center;
+        }
+        .tab-btn.active {
+            color: #ffffff;
+            background-color: #2563eb;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+        }
+
+        /* इन-गेम टैब कंटेंट स्विचिंग */
+        .menu-section { width: 100%; display: none; }
+        .menu-section.active { display: block; }
+
+        .info-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #1e293b; font-size: 12px; }
+        .info-label { color: #475569; font-weight: 600; text-transform: uppercase; }
+        .info-value { color: #ffffff; font-family: monospace; }
+        .text-green { color: #22c55e; font-weight: bold; }
+
+        .feature-box { display: flex; justify-content: space-between; align-items: center; padding: 12px 10px; background-color: #0b0d16; border: 1px solid #1e293b; border-radius: 6px; margin-bottom: 8px; }
+        .feature-title { font-size: 11px; font-weight: 700; color: #ffffff; text-transform: uppercase; }
+        .switch { position: relative; display: inline-block; width: 36px; height: 20px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #1e293b; transition: .3s; border-radius: 20px; }
+        .slider:before { position: absolute; content: ""; height: 14px; width: 14px; left: 3px; bottom: 3px; background-color: #ffffff; transition: .3s; border-radius: 50%; }
+        input:checked + .slider { background-color: #2563eb; }
+        input:checked + .slider:before { transform: translateX(16px); }
+        .sub-heading { font-size: 10px; color: #475569; font-weight: 800; letter-spacing: 1px; margin: 15px 0 5px 2px; text-transform: uppercase; }
+
+        .btn-primary { width: 100%; background: transparent; border: 1px solid #2563eb; color: #3b82f6; padding: 14px; border-radius: 6px; font-weight: 800; font-size: 12px; letter-spacing: 2px; cursor: pointer; text-transform: uppercase; margin-top: 20px; }
+
+        .download-container { width: 100%; display: flex; flex-direction: column; gap: 12px; margin-top: 10px; }
+        .download-item { background-color: #0b0d16; border: 1px solid #1e293b; border-radius: 8px; padding: 14px; display: flex; align-items: center; justify-content: space-between; }
+        .download-info { display: flex; flex-direction: column; gap: 2px; }
+        .download-info h4 { color: #ffffff; font-size: 13px; font-weight: 700; }
+        .download-info p { color: #475569; font-size: 10px; font-family: monospace; }
+        .get-btn { background-color: transparent; border: 1px solid #2563eb; color: #3b82f6; font-size: 11px; font-weight: 800; padding: 6px 16px; border-radius: 4px; text-decoration: none; text-transform: uppercase; }
+
         .footer {
             width: 100%;
             max-width: 350px;
@@ -144,42 +182,50 @@
             color: #334155;
             border-top: 1px solid rgba(30, 41, 59, 0.3);
             padding-top: 12px;
-            line-height: 1.4;
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
 
-    <!-- गोल तैरने वाला आइकन -->
+    <!-- अदृश्य टारगेट एंकर जो स्क्रीन बदलेगा -->
+    <div id="show-menu" style="display:none;"></div>
+
     <div class="floating-widget">(0)</div>
 
     <div class="top-bar">
         <div class="status-dot"><span class="dot"></span> ACCESS REQUIRED</div>
-        <div style="color: #2563eb; font-weight: bold;">LOCKED</div>
+        <div id="topStatus" style="color: #2563eb; font-weight: bold;">LOCKED</div>
     </div>
 
     <div class="container">
         
-        <!-- XREG लोगो हमेशा ऊपर रहेगा -->
-        <div class="form-area">
-            <div class="logo-box">
-                <h1 class="logo-text">XREG</h1>
-                <div class="logo-sub">Authentication Engine</div>
-            </div>
-
-            <label class="input-label">LICENSE KEY</label>
-            <input type="text" id="licenseKey" value="XREG-90B3-A606-76FC" class="key-input" readonly>
-            <p id="msg" class="msg-text">■ CLICK AUTHENTICATE TO ACCESS ENGINE</p>
-            
-            <!-- यह बटन ब्राउज़र की सभी रुकावटों को पार करके 100% सीधे अगले पेज पर ले जाएगा -->
-            <a href="dashboard.html" class="btn-primary">AUTHENTICATE</a>
+        <div class="logo-box">
+            <h1 class="logo-text">XREG</h1>
+            <div class="logo-sub">Authentication Engine</div>
         </div>
 
-    </div>
+        <!-- 🔷 स्क्रीन 1: लॉगिन फॉर्म -->
+        <div id="loginScreen" class="form-area">
+            <label class="input-label">LICENSE KEY</label>
+            <input type="text" value="XREG-90B3-A606-76FC" class="key-input" readonly>
+            <p class="msg-text">■ CLICK AUTHENTICATE TO ACCESS ENGINE</p>
+            
+            <!-- यह बिना किसी 404 या जावास्क्रिप्ट एरर के 100% तुरंत इसी पेज पर अंदर का मेनू खोलेगा -->
+            <a href="#show-menu" class="btn-auth">AUTHENTICATE</a>
+        </div>
 
-    <div class="footer">
-        A valid license unlocks the engine. Keys are bound to one device.
-    </div>
+        <!-- 🔷 स्क्रीन 2: अंदर का पूरा मेनू -->
+        <div id="dashboardArea" class="dashboard-area">
+            <div class="menu-tabs">
+                <button id="btn-control" class="tab-btn active" onclick="switchTab('control')">Control</button>
+                <button id="btn-modules" class="tab-btn" onclick="switchTab('modules')">Modules</button>
+                <button id="btn-system" class="tab-btn" onclick="switchTab('system')">System</button>
+            </div>
 
-</body>
-</html>
+            <!-- टैब 1: CONTROL -->
+            <div id="control" class="menu-section active">
+                <div class="info-row"><span class="info-label">Status</span><span class="info-value text-green">● Active</span></div>
+                <div class="info-row"><span class="info-label">HWID</span><span class="info-value">ed268ed01d67b7e8</span></div>
+                <div class="info-row"><span class="info-label">Server Region</span><span class="info-value">Japan 🇯🇵</span></div>
+                
