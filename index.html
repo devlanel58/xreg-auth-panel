@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XREG Client Authentication</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://jsdelivr.net"></script>
+    <style>
+        body {
+            background-color: #050508;
+            font-family: sans-serif;
+        }
+        .glow-btn:hover {
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-between min-h-screen text-gray-400 p-6 select-none">
+
+    <!-- Top Status Bar Simulation -->
+    <div class="w-full max-w-md flex justify-between items-center text-xs tracking-wider opacity-60 mt-2">
+        <div class="flex items-center gap-2">
+            <span class="inline-block w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
+            ACCESS REQUIRED
+        </div>
+        <div class="text-blue-500 font-bold uppercase tracking-widest">LOCKED</div>
+    </div>
+
+    <!-- Main Content Container -->
+    <div class="w-full max-w-md flex flex-col items-center justify-center flex-grow my-8">
+        
+        <!-- Placeholder for XREG Logo -->
+        <div class="mb-12 flex flex-col items-center">
+            <h1 class="text-5xl font-black tracking-widest text-blue-500 italic drop-shadow-[0_0_10px_rgba(59,130,246,0.6)]">
+                XREG
+            </h1>
+            <div class="text-[10px] tracking-[0.3em] uppercase text-blue-400 mt-2 font-semibold">Authentication Engine</div>
+        </div>
+
+        <!-- License Input Form -->
+        <div class="w-full space-y-4">
+            <label class="block text-xs uppercase tracking-[0.2em] text-gray-500 font-semibold pl-1">
+                LICENSE KEY
+            </label>
+            
+            <input 
+                type="text" 
+                id="licenseKey"
+                placeholder="XREG-XXXX-XXXX-XXXX" 
+                maxlength="19"
+                class="w-full bg-[#0d0e12] border border-gray-800 rounded-lg py-4 px-4 text-center tracking-widest text-white placeholder-gray-700 focus:outline-none focus:border-blue-500 transition-all font-mono uppercase text-sm"
+            >
+            
+            <p id="statusMsg" class="text-center text-xs tracking-wider text-blue-400 uppercase pt-1">
+                ■ ENTER YOUR FULL KEY
+            </p>
+
+            <button 
+                onclick="checkLicense()"
+                class="glow-btn w-full bg-transparent border border-blue-600 hover:bg-blue-600/10 text-blue-400 hover:text-blue-300 font-bold tracking-[0.25em] py-4 rounded-lg transition-all uppercase text-sm mt-4 cursor-pointer"
+            >
+                AUTHENTICATE
+            </button>
+        </div>
+    </div>
+
+    <!-- Bottom Footer Info -->
+    <div class="w-full max-w-md text-center text-xs tracking-wide text-gray-600 border-t border-gray-900/50 pt-4 mb-2">
+        A valid license unlocks the engine. Keys are bound to one device.
+    </div>
+
+    <!-- Basic Logic Script -->
+    <script>
+        // Automatic Dash Formatting Logic
+        const input = document.getElementById('licenseKey');
+        input.addEventListener('input', (e) => {
+            let val = e.target.value.replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
+            if (!val.startsWith('XREG')) {
+                val = 'XREG' + val;
+            }
+            let formatted = '';
+            for (let i = 0; i < val.length; i++) {
+                if (i === 4 || i === 8 || i === 12) {
+                    formatted += '-';
+                }
+                formatted += val[i];
+            }
+            e.target.value = formatted.substring(0, 19);
+        });
+
+        // Click Action
+        function checkLicense() {
+            const key = input.value;
+            const status = document.getElementById('statusMsg');
+            
+            if (key.length < 19) {
+                status.innerText = "✖ INVALID KEY LENGTH";
+                status.style.color = "#ef4444";
+                return;
+            }
+
+            // Demo Key Validation
+            if (key === "XREG-1111-2222-3333") {
+                status.innerText = "✔ ACCESS GRANTED! UNLOCKING...";
+                status.style.color = "#22c55e";
+                alert("Success! Engine Unlocked.");
+            } else {
+                status.innerText = "✖ INVALID OR EXPIRED LICENSE KEY";
+                status.style.color = "#ef4444";
+            }
+        }
+    </script>
+</body>
+</html>
