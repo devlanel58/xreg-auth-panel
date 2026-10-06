@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XREG Client Menu</title>
+    <title>XREG Client Authentication</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
@@ -15,7 +15,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: space-between;
-            padding: 15px;
+            padding: 20px;
             user-select: none;
         }
         .top-bar {
@@ -27,7 +27,6 @@
             letter-spacing: 2px;
             opacity: 0.5;
             margin-top: 5px;
-            margin-bottom: 10px;
         }
         .status-dot { display: flex; align-items: center; gap: 6px; }
         .dot { width: 6px; height: 6px; background-color: #2563eb; border-radius: 50%; }
@@ -39,49 +38,83 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: flex-start;
+            justify-content: center;
+            margin: 20px 0;
         }
 
-        /* 🔷 XREG ओरिजिनल लोगो */
-        .xreg-logo-box {
-            position: relative;
-            width: 70px;
-            height: 70px;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transform: scale(0.9);
+        /* 🔷 XREG ओरिजिनल लोगो स्टाइल */
+        .logo-box {
+            text-align: center;
+            margin-bottom: 35px;
         }
-        .claw-lines {
-            position: absolute;
-            width: 50px;
-            height: 50px;
-            border-left: 6px solid #2563eb;
-            border-right: 6px solid #2563eb;
-            transform: skewX(-20deg);
-            filter: drop-shadow(0 0 15px rgba(37, 99, 235, 0.8));
-        }
-        .claw-lines::before {
-            content: '';
-            position: absolute;
-            left: 16px;
-            top: 0;
-            width: 6px;
-            height: 100%;
-            background-color: #2563eb;
-        }
-        .logo-title {
-            position: absolute;
-            bottom: -20px;
-            font-size: 11px;
+        .logo-text {
+            font-size: 48px;
             font-weight: 900;
-            letter-spacing: 5px;
+            letter-spacing: 4px;
+            color: #2563eb;
+            font-style: italic;
+            text-shadow: 0 0 15px rgba(37, 99, 235, 0.6);
+        }
+        .logo-sub {
+            font-size: 10px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #3b82f6;
+            margin-top: 8px;
+            font-weight: 600;
+        }
+
+        /* लॉगिन फॉर्म एरिया */
+        .form-area { width: 100%; }
+        .input-label {
+            font-size: 10px;
+            letter-spacing: 2px;
+            color: #475569;
+            font-weight: 700;
+            margin-bottom: 6px;
+            display: block;
+        }
+        .key-input {
+            width: 100%;
+            background-color: #0b0d16;
+            border: 1px solid #1e293b;
+            border-radius: 6px;
+            padding: 15px;
+            text-align: center;
             color: #ffffff;
+            font-size: 13px;
+            font-family: monospace;
+            letter-spacing: 2px;
+            outline: none;
+        }
+        .msg-text {
+            text-align: center;
+            font-size: 10px;
+            letter-spacing: 1px;
+            color: #3b82f6;
+            margin: 15px 0;
+        }
+        .btn-primary {
+            width: 100%;
+            background: transparent;
+            border: 1px solid #2563eb;
+            color: #3b82f6;
+            padding: 15px;
+            border-radius: 6px;
+            font-weight: 800;
+            font-size: 12px;
+            letter-spacing: 3px;
+            cursor: pointer;
+            transition: all 0.3s;
             text-transform: uppercase;
         }
+        .btn-primary:hover {
+            background-color: rgba(37, 99, 235, 0.1);
+            box-shadow: 0 0 15px rgba(37, 99, 235, 0.4);
+        }
 
-        /* 📑 इन-गेम नेविगेशन टैब्स */
+        /* 📑 इन-गेम नेविगेशन टैब्स (लॉगिन के बाद दिखेंगे) */
+        .dashboard-area { width: 100%; display: none; }
         .menu-tabs {
             display: flex;
             width: 100%;
@@ -89,29 +122,25 @@
             border: 1px solid #1e293b;
             border-radius: 8px;
             overflow: hidden;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
         .tab-btn {
             flex: 1;
-            padding: 10px;
+            padding: 12px;
             background: none;
             border: none;
             color: #475569;
-            font-size: 10px;
+            font-size: 11px;
             font-weight: 800;
             letter-spacing: 1px;
             cursor: pointer;
             text-transform: uppercase;
             text-align: center;
-            transition: all 0.2s;
         }
         .tab-btn.active {
             color: #ffffff;
             background-color: #2563eb;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
         }
-
-        /* कंटेंट सेक्शन्स */
         .menu-section { width: 100%; display: none; }
         .menu-section.active { display: block; }
 
@@ -119,15 +148,15 @@
         .info-row {
             display: flex;
             justify-content: space-between;
-            padding: 10px 0;
+            padding: 12px 0;
             border-bottom: 1px solid #1e293b;
-            font-size: 11px;
+            font-size: 12px;
         }
         .info-label { color: #475569; font-weight: 600; text-transform: uppercase; }
         .info-value { color: #ffffff; font-family: monospace; }
         .text-green { color: #22c55e; font-weight: bold; }
 
-        /* 🔘 इन-गेम टॉगल बटन्स */
+        /* टॉगल बटन स्टाइल */
         .feature-box {
             display: flex;
             justify-content: space-between;
@@ -138,69 +167,24 @@
             border-radius: 6px;
             margin-bottom: 8px;
         }
-        .feature-title { font-size: 11px; font-weight: 700; color: #ffffff; letter-spacing: 0.5px; text-transform: uppercase; }
-        .switch {
-            position: relative;
-            display: inline-block;
-            width: 36px;
-            height: 20px;
-        }
+        .feature-title { font-size: 11px; font-weight: 700; color: #ffffff; text-transform: uppercase; }
+        .switch { position: relative; display: inline-block; width: 36px; height: 20px; }
         .switch input { opacity: 0; width: 0; height: 0; }
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-color: #1e293b;
-            transition: .3s;
-            border-radius: 20px;
-        }
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 14px; width: 14px;
-            left: 3px; bottom: 3px;
-            background-color: #ffffff;
-            transition: .3s;
-            border-radius: 50%;
-        }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #1e293b; transition: .3s; border-radius: 20px; }
+        .slider:before { position: absolute; content: ""; height: 14px; width: 14px; left: 3px; bottom: 3px; background-color: #ffffff; transition: .3s; border-radius: 50%; }
         input:checked + .slider { background-color: #2563eb; }
         input:checked + .slider:before { transform: translateX(16px); }
-
-        .sub-heading {
-            font-size: 10px;
-            color: #475569;
-            font-weight: 800;
-            letter-spacing: 1px;
-            margin: 10px 0 5px 2px;
-            text-transform: uppercase;
-        }
-
-        .btn-primary {
-            width: 100%;
-            background: transparent;
-            border: 1px solid #2563eb;
-            color: #3b82f6;
-            padding: 12px;
-            border-radius: 6px;
-            font-weight: 800;
-            font-size: 11px;
-            letter-spacing: 2px;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-transform: uppercase;
-            margin-top: 15px;
-        }
-        .btn-primary:hover { background-color: rgba(37, 99, 235, 0.1); }
+        .sub-heading { font-size: 10px; color: #475569; font-weight: 800; letter-spacing: 1px; margin: 15px 0 5px 2px; text-transform: uppercase; }
 
         .footer {
             width: 100%;
             max-width: 350px;
             text-align: center;
-            font-size: 9px;
+            font-size: 10px;
             color: #334155;
             border-top: 1px solid rgba(30, 41, 59, 0.3);
-            padding-top: 10px;
-            margin-top: 15px;
+            padding-top: 12px;
+            line-height: 1.4;
         }
     </style>
 </head>
@@ -208,66 +192,57 @@
 
     <div class="top-bar">
         <div class="status-dot"><span class="dot"></span> ACCESS REQUIRED</div>
-        <div style="color: #22c55e; font-weight: bold;">ACTIVE</div>
+        <div id="topLocked" style="color: #2563eb; font-weight: bold;">LOCKED</div>
     </div>
 
     <div class="container">
         
-        <div class="xreg-logo-box">
-            <div class="claw-lines"></div>
-            <div class="logo-title">XREG</div>
-        </div>
-
-        <div class="menu-tabs">
-            <button id="btn-control" class="tab-btn active" onclick="switchTab('control')">Control</button>
-            <button id="btn-modules" class="tab-btn" onclick="switchTab('modules')">Modules</button>
-            <button id="btn-system" class="tab-btn" onclick="switchTab('system')">System</button>
-        </div>
-
-        <!-- 📂 टैब 1: CONTROL (लोकेशन और सर्वर बदलने वाला सिस्टम) -->
-        <div id="control" class="menu-section active">
-            <div class="info-row"><span class="info-label">Status</span><span class="info-value text-green">● Active</span></div>
-            <div class="info-row"><span class="info-label">HWID</span><span class="info-value">ed268ed01d67b7e8</span></div>
-            
-            <!-- यहाँ लोकेशन और IP अपने आप रैंडम बदलेगी -->
-            <div class="info-row"><span class="info-label">Server Region</span><span class="info-value" id="locVal">Singapore 🇸🇬</span></div>
-            <div class="info-row"><span class="info-label">Bypass IP</span><span class="info-value" id="ipVal">185.220.101.4</span></div>
-            
-            <div class="info-row"><span class="info-label">Expires In</span><span class="info-value text-green">29d 23h 59m</span></div>
-            
-            <!-- यह बटन सीधे Play Store पर Happ Proxy Utility ऐप को खोलेगा -->
-            <button class="btn-primary" onclick="openHappInPlayStore()">ADD TO HAPP</button>
-        </div>
-
-        <!-- 📂 टैब 2: MODULES -->
-        <div id="modules" class="menu-section">
-            <div class="sub-heading">🎯 TARGET HOLD OPTIONS</div>
-            <div class="feature-box"><span class="feature-title">When Firing</span><label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
-            <div class="feature-box"><span class="feature-title">When Scoping</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
-
-            <div class="sub-heading">⚡ AIMBOT CONFIG</div>
-            <div class="feature-box"><span class="feature-title">Auto Aim Lock</span><label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
-            <div class="feature-box"><span class="feature-title">ESP Line View</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
-        </div>
-
-        <!-- 📂 टैब 3: SYSTEM -->
-        <div id="system" class="menu-section">
-            <div class="info-row"><span class="info-label">App Mode</span><span class="info-value">IN-GAME BYPASS</span></div>
-            <div class="info-row"><span class="info-label">Version</span><span class="info-value">v4.0 (Latest)</span></div>
-            <div style="font-size: 10px; color: #475569; text-align: center; margin-top: 20px; line-height: 1.5;">
-                Happ Proxy integration is fully loaded.<br>Engine is running inside secure sandbox.
+        <!-- 🔷 स्क्रीन 1: लॉगिन फॉर्म (यहाँ XREG लोगो दिखेगा) -->
+        <div id="loginScreen" class="form-area">
+            <div class="logo-box">
+                <h1 class="logo-text">XREG</h1>
+                <div class="logo-sub">Authentication Engine</div>
             </div>
+
+            <label class="input-label">LICENSE KEY</label>
+            <input type="text" id="licenseKey" class="key-input" autocomplete="off" readonly>
+            <p id="msg" class="msg-text">■ CLICK AUTHENTICATE TO ACCESS ENGINE</p>
+            <button onclick="processAuth()" class="btn-primary">AUTHENTICATE</button>
         </div>
 
-    </div>
+        <!-- 🔷 स्क्रीन 2: अंदर का डैशबोर्ड (बटन दबाने पर यह आगे खुलेगा) -->
+        <div id="dashboardArea" class="dashboard-area">
+            <div class="logo-box" style="margin-bottom: 20px; transform: scale(0.8);">
+                <h1 class="logo-text">XREG</h1>
+                <div class="logo-sub">Authentication Engine</div>
+            </div>
 
-    <div class="footer">
-        A valid license unlocks the engine. Keys are bound to one device.
-    </div>
+            <div class="menu-tabs">
+                <button id="btn-control" class="tab-btn active" onclick="switchTab('control')">Control</button>
+                <button id="btn-modules" class="tab-btn" onclick="switchTab('modules')">Modules</button>
+                <button id="btn-system" class="tab-btn" onclick="switchTab('system')">System</button>
+            </div>
 
-    <script>
-        // 🌍 रैंडम लोकेशन और IP एड्रेस बदलने का लॉजिक
-        window.onload = function() {
-            const locations = [
-                "Singapore 🇸🇬", "Germany 🇩🇪", "Japan 🇯🇵", 
+            <!-- टैब 1: CONTROL (लोकेशन और प्ले स्टोर वाला बटन) -->
+            <div id="control" class="menu-section active">
+                <div class="info-row"><span class="info-label">Status</span><span class="info-value text-green">● Active</span></div>
+                <div class="info-row"><span class="info-label">HWID</span><span class="info-value">ed268ed01d67b7e8</span></div>
+                <div class="info-row"><span class="info-label">Server Region</span><span class="info-value" id="locVal">Singapore 🇸🇬</span></div>
+                <div class="info-row"><span class="info-label">Bypass IP</span><span class="info-value" id="ipVal">185.220.101.4</span></div>
+                <div class="info-row"><span class="info-label">Expires In</span><span class="info-value text-green">29d 23h 59m</span></div>
+                <button class="btn-primary" style="margin-top: 20px;" onclick="openPlayStore()">ADD TO HAPP</button>
+            </div>
+
+            <!-- टैब 2: MODULES (सारे ऑन/ऑफ हैक बटन्स) -->
+            <div id="modules" class="menu-section">
+                <div class="sub-heading">🎯 TARGET HOLD OPTIONS</div>
+                <div class="feature-box"><span class="feature-title">When Firing</span><label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
+                <div class="feature-box"><span class="feature-title">When Scoping</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+                <div class="sub-heading">⚡ AIMBOT CONFIG</div>
+                <div class="feature-box"><span class="feature-title">Auto Aim Lock</span><label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
+                <div class="feature-box"><span class="feature-title">ESP Line View</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+            </div>
+
+            <!-- टैब 3: SYSTEM -->
+            <div id="system" class="menu-section">
                 
