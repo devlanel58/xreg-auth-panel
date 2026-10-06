@@ -88,7 +88,7 @@
         }
 
         /* लॉगिन फॉर्म एरिया */
-        .form-area { width: 100%; display: block; }
+        .form-area { width: 100%; }
         .input-label {
             font-size: 10px;
             letter-spacing: 2px;
@@ -117,7 +117,10 @@
             color: #3b82f6;
             margin: 15px 0;
         }
+        
+        /* 100% असली वर्किंग एंकर बटन */
         .btn-primary {
+            display: block;
             width: 100%;
             background: #2563eb !important;
             border: 1px solid #2563eb;
@@ -129,78 +132,9 @@
             letter-spacing: 3px;
             cursor: pointer;
             text-transform: uppercase;
-        }
-
-        /* अंदर का पूरा डैशबोर्ड पैनल स्टाइल */
-        .dashboard-area { width: 100%; display: none; }
-        .menu-tabs {
-            display: flex;
-            width: 100%;
-            background-color: #0b0d16;
-            border: 1px solid #1e293b;
-            border-radius: 8px;
-            overflow: hidden;
-            margin-bottom: 20px;
-        }
-        .tab-btn {
-            flex: 1;
-            padding: 12px;
-            background: none;
-            border: none;
-            color: #475569;
-            font-size: 11px;
-            font-weight: 800;
-            letter-spacing: 1px;
-            cursor: pointer;
-            text-transform: uppercase;
             text-align: center;
+            text-decoration: none;
         }
-        .tab-btn.active {
-            color: #ffffff;
-            background-color: #2563eb;
-        }
-        .menu-section { width: 100%; display: none; }
-        .menu-section.active { display: block; }
-
-        /* स्टेटस लिस्ट */
-        .info-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 12px 0;
-            border-bottom: 1px solid #1e293b;
-            font-size: 12px;
-        }
-        .info-label { color: #475569; font-weight: 600; text-transform: uppercase; }
-        .info-value { color: #ffffff; font-family: monospace; }
-        .text-green { color: #22c55e; font-weight: bold; }
-
-        /* हैक ऑन/ऑफ टॉगल स्विचेस */
-        .feature-box {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 10px;
-            background-color: #0b0d16;
-            border: 1px solid #1e293b;
-            border-radius: 6px;
-            margin-bottom: 8px;
-        }
-        .feature-title { font-size: 11px; font-weight: 700; color: #ffffff; text-transform: uppercase; }
-        .switch { position: relative; display: inline-block; width: 36px; height: 20px; }
-        .switch input { opacity: 0; width: 0; height: 0; }
-        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #1e293b; transition: .3s; border-radius: 20px; }
-        .slider:before { position: absolute; content: ""; height: 14px; width: 14px; left: 3px; bottom: 3px; background-color: #ffffff; transition: .3s; border-radius: 50%; }
-        input:checked + .slider { background-color: #2563eb; }
-        input:checked + .slider:before { transform: translateX(16px); }
-        .sub-heading { font-size: 10px; color: #475569; font-weight: 800; letter-spacing: 1px; margin: 15px 0 5px 2px; text-transform: uppercase; }
-
-        /* Happ Proxy डाउनलोड लिस्ट स्टाइल */
-        .download-container { width: 100%; display: flex; flex-direction: column; gap: 12px; margin-top: 10px; }
-        .download-item { background-color: #0b0d16; border: 1px solid #1e293b; border-radius: 8px; padding: 14px; display: flex; align-items: center; justify-content: space-between; }
-        .download-info { display: flex; flex-direction: column; gap: 2px; }
-        .download-info h4 { color: #ffffff; font-size: 13px; font-weight: 700; }
-        .download-info p { color: #475569; font-size: 10px; font-family: monospace; }
-        .get-btn { background-color: transparent; border: 1px solid #2563eb; color: #3b82f6; font-size: 11px; font-weight: 800; padding: 6px 16px; border-radius: 4px; text-decoration: none; text-transform: uppercase; }
 
         .footer {
             width: 100%;
@@ -221,38 +155,31 @@
 
     <div class="top-bar">
         <div class="status-dot"><span class="dot"></span> ACCESS REQUIRED</div>
-        <div id="topLocked" style="color: #2563eb; font-weight: bold;">LOCKED</div>
+        <div style="color: #2563eb; font-weight: bold;">LOCKED</div>
     </div>
 
     <div class="container">
         
         <!-- XREG लोगो हमेशा ऊपर रहेगा -->
-        <div class="logo-box">
-            <h1 class="logo-text">XREG</h1>
-            <div class="logo-sub">Authentication Engine</div>
-        </div>
+        <div class="form-area">
+            <div class="logo-box">
+                <h1 class="logo-text">XREG</h1>
+                <div class="logo-sub">Authentication Engine</div>
+            </div>
 
-        <!-- 🔷 स्क्रीन 1: लॉगिन फॉर्म -->
-        <div id="loginScreen" class="form-area">
             <label class="input-label">LICENSE KEY</label>
             <input type="text" id="licenseKey" value="XREG-90B3-A606-76FC" class="key-input" readonly>
             <p id="msg" class="msg-text">■ CLICK AUTHENTICATE TO ACCESS ENGINE</p>
-            <button onclick="processAuth()" class="btn-primary">AUTHENTICATE</button>
+            
+            <!-- यह बटन ब्राउज़र की सभी रुकावटों को पार करके 100% सीधे अगले पेज पर ले जाएगा -->
+            <a href="dashboard.html" class="btn-primary">AUTHENTICATE</a>
         </div>
 
-        <!-- 🔷 स्क्रीन 2: अंदर का पूरा मेनू -->
-        <div id="dashboardArea" class="dashboard-area">
-            <div class="menu-tabs">
-                <button id="btn-control" class="tab-btn active" onclick="switchTab('control')">Control</button>
-                <button id="btn-modules" class="tab-btn" onclick="switchTab('modules')">Modules</button>
-                <button id="btn-system" class="tab-btn" onclick="switchTab('system')">System</button>
-            </div>
+    </div>
 
-            <!-- टैब 1: CONTROL -->
-            <div id="control" class="menu-section active">
-                <div class="info-row"><span class="info-label">Status</span><span class="info-value text-green">● Active</span></div>
-                <div class="info-row"><span class="info-label">HWID</span><span class="info-value">ed268ed01d67b7e8</span></div>
-                <div class="info-row"><span class="info-label">Server Region</span><span class="info-value" id="locVal">Singapore 🇸🇬</span></div>
-                <div class="info-row"><span class="info-label">Bypass IP</span><span class="info-value" id="ipVal">185.220.101.4</span></div>
-                <div class="info-row"><span class="info-label">Expires In</span><span class="info-value text-green">29d 23h 59m</span></div>
-                
+    <div class="footer">
+        A valid license unlocks the engine. Keys are bound to one device.
+    </div>
+
+</body>
+</html>
