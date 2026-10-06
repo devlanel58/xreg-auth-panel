@@ -113,7 +113,7 @@
             box-shadow: 0 0 15px rgba(37, 99, 235, 0.4);
         }
 
-        /* 📑 इन-गेम नेविगेशन टैब्स (लॉगिन के बाद दिखेंगे) */
+        /* 📑 इन-गेम नेविगेशन टैब्स */
         .dashboard-area { width: 100%; display: none; }
         .menu-tabs {
             display: flex;
@@ -197,7 +197,7 @@
 
     <div class="container">
         
-        <!-- 🔷 स्क्रीन 1: लॉगिन फॉर्म (यहाँ XREG लोगो दिखेगा) -->
+        <!-- 🔷 स्क्रीन 1: लॉगिन फॉर्म -->
         <div id="loginScreen" class="form-area">
             <div class="logo-box">
                 <h1 class="logo-text">XREG</h1>
@@ -205,12 +205,13 @@
             </div>
 
             <label class="input-label">LICENSE KEY</label>
-            <input type="text" id="licenseKey" class="key-input" autocomplete="off" readonly>
+            <!-- यहाँ चाबी को सीधे पक्का लिख दिया है ताकि बॉक्स कभी खाली न रहे -->
+            <input type="text" id="licenseKey" value="XREG-90B3-A606-76FC" class="key-input" autocomplete="off" readonly>
             <p id="msg" class="msg-text">■ CLICK AUTHENTICATE TO ACCESS ENGINE</p>
             <button onclick="processAuth()" class="btn-primary">AUTHENTICATE</button>
         </div>
 
-        <!-- 🔷 स्क्रीन 2: अंदर का डैशबोर्ड (बटन दबाने पर यह आगे खुलेगा) -->
+        <!-- 🔷 स्क्रीन 2: अंदर का डैशबोर्ड -->
         <div id="dashboardArea" class="dashboard-area">
             <div class="logo-box" style="margin-bottom: 20px; transform: scale(0.8);">
                 <h1 class="logo-text">XREG</h1>
@@ -223,7 +224,7 @@
                 <button id="btn-system" class="tab-btn" onclick="switchTab('system')">System</button>
             </div>
 
-            <!-- टैब 1: CONTROL (लोकेशन और प्ले स्टोर वाला बटन) -->
+            <!-- टैब 1: CONTROL -->
             <div id="control" class="menu-section active">
                 <div class="info-row"><span class="info-label">Status</span><span class="info-value text-green">● Active</span></div>
                 <div class="info-row"><span class="info-label">HWID</span><span class="info-value">ed268ed01d67b7e8</span></div>
@@ -233,7 +234,7 @@
                 <button class="btn-primary" style="margin-top: 20px;" onclick="openPlayStore()">ADD TO HAPP</button>
             </div>
 
-            <!-- टैब 2: MODULES (सारे ऑन/ऑफ हैक बटन्स) -->
+            <!-- टैब 2: MODULES -->
             <div id="modules" class="menu-section">
                 <div class="sub-heading">🎯 TARGET HOLD OPTIONS</div>
                 <div class="feature-box"><span class="feature-title">When Firing</span><label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
