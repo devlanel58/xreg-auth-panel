@@ -42,7 +42,7 @@
             justify-content: flex-start;
         }
 
-        /* 🔷 XREG तीन लाइन वाला लोगो */
+        /* 🔷 XREG ओरिजिनल लोगो */
         .xreg-logo-box {
             position: relative;
             width: 70px;
@@ -127,7 +127,7 @@
         .info-value { color: #ffffff; font-family: monospace; }
         .text-green { color: #22c55e; font-weight: bold; }
 
-        /* 🔘 इन-गेम टॉगल बटन्स (ON/OFF switches) */
+        /* 🔘 इन-गेम टॉगल बटन्स */
         .feature-box {
             display: flex;
             justify-content: space-between;
@@ -166,7 +166,6 @@
         input:checked + .slider { background-color: #2563eb; }
         input:checked + .slider:before { transform: translateX(16px); }
 
-        /* सब-हैडिंग */
         .sub-heading {
             font-size: 10px;
             color: #475569;
@@ -176,7 +175,6 @@
             text-transform: uppercase;
         }
 
-        /* एक्शन बटन */
         .btn-primary {
             width: 100%;
             background: transparent;
@@ -220,50 +218,39 @@
             <div class="logo-title">XREG</div>
         </div>
 
-        <!-- 📑 टैब स्विचर मेनू -->
         <div class="menu-tabs">
             <button id="btn-control" class="tab-btn active" onclick="switchTab('control')">Control</button>
             <button id="btn-modules" class="tab-btn" onclick="switchTab('modules')">Modules</button>
             <button id="btn-system" class="tab-btn" onclick="switchTab('system')">System</button>
         </div>
 
-        <!-- 📂 टैब 1: CONTROL (यूजर का स्टेटस) -->
+        <!-- 📂 टैब 1: CONTROL (लोकेशन और सर्वर बदलने वाला सिस्टम) -->
         <div id="control" class="menu-section active">
             <div class="info-row"><span class="info-label">Status</span><span class="info-value text-green">● Active</span></div>
             <div class="info-row"><span class="info-label">HWID</span><span class="info-value">ed268ed01d67b7e8</span></div>
-            <div class="info-row"><span class="info-label">Device</span><span class="info-value">CPH2269</span></div>
+            
+            <!-- यहाँ लोकेशन और IP अपने आप रैंडम बदलेगी -->
+            <div class="info-row"><span class="info-label">Server Region</span><span class="info-value" id="locVal">Singapore 🇸🇬</span></div>
+            <div class="info-row"><span class="info-label">Bypass IP</span><span class="info-value" id="ipVal">185.220.101.4</span></div>
+            
             <div class="info-row"><span class="info-label">Expires In</span><span class="info-value text-green">29d 23h 59m</span></div>
-            <button class="btn-primary" onclick="goToHapp()">ADD TO HAPP</button>
+            
+            <!-- यह बटन सीधे Play Store पर Happ Proxy Utility ऐप को खोलेगा -->
+            <button class="btn-primary" onclick="openHappInPlayStore()">ADD TO HAPP</button>
         </div>
 
-        <!-- 📂 टैब 2: MODULES (सारे गेम हैक बटन यहाँ हैं) -->
+        <!-- 📂 टैब 2: MODULES -->
         <div id="modules" class="menu-section">
             <div class="sub-heading">🎯 TARGET HOLD OPTIONS</div>
-            
-            <div class="feature-box">
-                <span class="feature-title">When Firing</span>
-                <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
-            </div>
-            
-            <div class="feature-box">
-                <span class="feature-title">When Scoping</span>
-                <label class="switch"><input type="checkbox"><span class="slider"></span></label>
-            </div>
+            <div class="feature-box"><span class="feature-title">When Firing</span><label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
+            <div class="feature-box"><span class="feature-title">When Scoping</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
 
             <div class="sub-heading">⚡ AIMBOT CONFIG</div>
-            
-            <div class="feature-box">
-                <span class="feature-title">Auto Aim Lock</span>
-                <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
-            </div>
-            
-            <div class="feature-box">
-                <span class="feature-title">ESP Line View</span>
-                <label class="switch"><input type="checkbox"><span class="slider"></span></label>
-            </div>
+            <div class="feature-box"><span class="feature-title">Auto Aim Lock</span><label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
+            <div class="feature-box"><span class="feature-title">ESP Line View</span><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
         </div>
 
-        <!-- 📂 टैब 3: SYSTEM (डाउनलोड्स) -->
+        <!-- 📂 टैब 3: SYSTEM -->
         <div id="system" class="menu-section">
             <div class="info-row"><span class="info-label">App Mode</span><span class="info-value">IN-GAME BYPASS</span></div>
             <div class="info-row"><span class="info-label">Version</span><span class="info-value">v4.0 (Latest)</span></div>
@@ -279,8 +266,8 @@
     </div>
 
     <script>
-        // टैब बदलने का जादुई लॉजिक
-        function switchTab(tabId) {
-            // सारे सेक्शन्स छुपाएं
-            document.querySelectorAll('.menu-section').forEach(el => el.classList.remove('active'));
-            
+        // 🌍 रैंडम लोकेशन और IP एड्रेस बदलने का लॉजिक
+        window.onload = function() {
+            const locations = [
+                "Singapore 🇸🇬", "Germany 🇩🇪", "Japan 🇯🇵", 
+                
