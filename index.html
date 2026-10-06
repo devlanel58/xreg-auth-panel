@@ -4,79 +4,217 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>XREG Client Authentication</title>
-    <!-- Tailwind CSS for styling -->
-    <script src="https://jsdelivr.net"></script>
     <style>
+        /* पूरे पेज का बैकग्राउंड और फॉन्ट */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
         body {
             background-color: #050508;
-            font-family: sans-serif;
+            color: #9ca3af;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            padding: 24px;
+            user-select: none;
         }
-        .glow-btn:hover {
-            box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+
+        /* टॉप स्टेटस बार */
+        .status-bar {
+            width: 100%;
+            max-width: 400px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11px;
+            letter-spacing: 2px;
+            opacity: 0.6;
+            margin-top: 10px;
+        }
+        .status-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .dot {
+            width: 8px;
+            height: 8px;
+            background-color: #3b82f6;
+            border-radius: 50%;
+        }
+        .status-right {
+            color: #3b82f6;
+            font-weight: bold;
+            letter-spacing: 3px;
+        }
+
+        /* मेन कंटेनर */
+        .main-container {
+            width: 100%;
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex-grow: 1;
+            margin: 32px 0;
+        }
+
+        /* XREG लोगो */
+        .logo-box {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+        .logo-text {
+            font-size: 48px;
+            font-weight: 900;
+            letter-spacing: 4px;
+            color: #3b82f6;
+            font-style: italic;
+            text-shadow: 0 0 15px rgba(59, 130, 246, 0.6);
+        }
+        .logo-sub {
+            font-size: 10px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #60a5fa;
+            margin-top: 8px;
+            font-weight: 600;
+        }
+
+        /* फॉर्म और इनपुट */
+        .form-box {
+            width: 100%;
+        }
+        .label-text {
+            display: block;
+            font-size: 11px;
+            letter-spacing: 2px;
+            color: #4b5563;
+            font-weight: 600;
+            margin-bottom: 8px;
+            padding-left: 4px;
+        }
+        .input-field {
+            width: 100%;
+            background-color: #0d0e12;
+            border: 1px solid #1f2937;
+            border-radius: 8px;
+            padding: 16px;
+            text-align: center;
+            letter-spacing: 3px;
+            color: #ffffff;
+            font-size: 14px;
+            font-family: monospace;
+            text-transform: uppercase;
+            outline: none;
+            transition: all 0.3s;
+        }
+        .input-field::placeholder {
+            color: #374151;
+        }
+        .input-field:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.2);
+        }
+
+        /* स्टेटस संदेश */
+        .status-msg {
+            text-align: center;
+            font-size: 11px;
+            letter-spacing: 2px;
+            color: #60a5fa;
+            margin-top: 12px;
+            margin-bottom: 20px;
+        }
+
+        /* बटन */
+        .auth-btn {
+            width: 100%;
+            background-color: transparent;
+            border: 1px solid #2563eb;
+            color: #60a5fa;
+            font-weight: bold;
+            letter-spacing: 3px;
+            padding: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+        .auth-btn:hover {
+            background-color: rgba(59, 130, 246, 0.1);
+            color: #93c5fd;
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
+        }
+
+        /* फुटर */
+        .footer-text {
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            font-size: 11px;
+            letter-spacing: 1px;
+            color: #4b5563;
+            border-top: 1px solid rgba(31, 41, 55, 0.5);
+            padding-top: 16px;
+            margin-bottom: 8px;
+            line-height: 1.5;
         }
     </style>
 </head>
-<body class="flex flex-col items-center justify-between min-h-screen text-gray-400 p-6 select-none">
+<body>
 
-    <!-- Top Status Bar Simulation -->
-    <div class="w-full max-w-md flex justify-between items-center text-xs tracking-wider opacity-60 mt-2">
-        <div class="flex items-center gap-2">
-            <span class="inline-block w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
+    <!-- टॉप स्टेटस बार -->
+    <div class="status-bar">
+        <div class="status-left">
+            <span class="dot"></span>
             ACCESS REQUIRED
         </div>
-        <div class="text-blue-500 font-bold uppercase tracking-widest">LOCKED</div>
+        <div class="status-right">LOCKED</div>
     </div>
 
-    <!-- Main Content Container -->
-    <div class="w-full max-w-md flex flex-col items-center justify-center flex-grow my-8">
-        
-        <!-- Placeholder for XREG Logo -->
-        <div class="mb-12 flex flex-col items-center">
-            <h1 class="text-5xl font-black tracking-widest text-blue-500 italic drop-shadow-[0_0_10px_rgba(59,130,246,0.6)]">
-                XREG
-            </h1>
-            <div class="text-[10px] tracking-[0.3em] uppercase text-blue-400 mt-2 font-semibold">Authentication Engine</div>
+    <!-- मेन एरिया -->
+    <div class="main-container">
+        <div class="logo-box">
+            <h1 class="logo-text">XREG</h1>
+            <div class="logo-sub">Authentication Engine</div>
         </div>
 
-        <!-- License Input Form -->
-        <div class="w-full space-y-4">
-            <label class="block text-xs uppercase tracking-[0.2em] text-gray-500 font-semibold pl-1">
-                LICENSE KEY
-            </label>
-            
+        <div class="form-box">
+            <label class="label-text">LICENSE KEY</label>
             <input 
                 type="text" 
                 id="licenseKey"
                 placeholder="XREG-XXXX-XXXX-XXXX" 
                 maxlength="19"
-                class="w-full bg-[#0d0e12] border border-gray-800 rounded-lg py-4 px-4 text-center tracking-widest text-white placeholder-gray-700 focus:outline-none focus:border-blue-500 transition-all font-mono uppercase text-sm"
+                class="input-field"
+                autocomplete="off"
             >
-            
-            <p id="statusMsg" class="text-center text-xs tracking-wider text-blue-400 uppercase pt-1">
-                ■ ENTER YOUR FULL KEY
-            </p>
-
-            <button 
-                onclick="checkLicense()"
-                class="glow-btn w-full bg-transparent border border-blue-600 hover:bg-blue-600/10 text-blue-400 hover:text-blue-300 font-bold tracking-[0.25em] py-4 rounded-lg transition-all uppercase text-sm mt-4 cursor-pointer"
-            >
-                AUTHENTICATE
-            </button>
+            <p id="statusMsg" class="status-msg">■ ENTER YOUR FULL KEY</p>
+            <button onclick="checkLicense()" class="auth-btn">AUTHENTICATE</button>
         </div>
     </div>
 
-    <!-- Bottom Footer Info -->
-    <div class="w-full max-w-md text-center text-xs tracking-wide text-gray-600 border-t border-gray-900/50 pt-4 mb-2">
+    <!-- बॉटम फुटर -->
+    <div class="footer-text">
         A valid license unlocks the engine. Keys are bound to one device.
     </div>
 
-    <!-- Basic Logic Script -->
+    <!-- लॉजिक स्क्रिप्ट -->
     <script>
-        // Automatic Dash Formatting Logic
         const input = document.getElementById('licenseKey');
+        const status = document.getElementById('statusMsg');
+
+        // डैश ऑटो-फॉर्मेटिंग
         input.addEventListener('input', (e) => {
             let val = e.target.value.replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
-            if (!val.startsWith('XREG')) {
+            if (val.length > 0 && !val.startsWith('XREG')) {
                 val = 'XREG' + val;
             }
             let formatted = '';
@@ -89,10 +227,9 @@
             e.target.value = formatted.substring(0, 19);
         });
 
-        // Click Action
+        // बटन क्लिक चेक
         function checkLicense() {
             const key = input.value;
-            const status = document.getElementById('statusMsg');
             
             if (key.length < 19) {
                 status.innerText = "✖ INVALID KEY LENGTH";
@@ -100,11 +237,9 @@
                 return;
             }
 
-            // Demo Key Validation
             if (key === "XREG-1111-2222-3333") {
                 status.innerText = "✔ ACCESS GRANTED! UNLOCKING...";
                 status.style.color = "#22c55e";
-                alert("Success! Engine Unlocked.");
             } else {
                 status.innerText = "✖ INVALID OR EXPIRED LICENSE KEY";
                 status.style.color = "#ef4444";
